@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests',
-  globalSetup: require.resolve('./tests/saveAuthStates.ts'),
+  globalSetup: './tests/saveAuthStates.ts',
   timeout: 30_000,
   expect: { timeout: 5000 },
   use: {
