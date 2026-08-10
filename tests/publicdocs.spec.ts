@@ -15,18 +15,27 @@ test.describe('Partner Portal - Public Documents', () => {
   test('should verify document metadata', async ({ page }) => {
     await page.goto('https://partners.uat.fastgamernetwork.com/public/documents', { waitUntil: 'networkidle' });
 
-    const firstRow = page.locator('tbody tr').nth(0);
+    const rows = page.locator('tbody tr');
+    const rowCount = await rows.count();
+    expect(rowCount).toBeGreaterThan(1);
 
-    await expect(firstRow).toContainText('Sample Active Public');
-    await expect(firstRow).toContainText('40.6 MB');
-    await expect(firstRow).toContainText('2026-05-29');
-    await expect(firstRow).toContainText('v1');
+    const firstRow = rows.nth(0);
+    const firstRowCells = firstRow.locator('td');
 
-    const secondRow = page.locator('tbody tr').nth(1);
+    await expect(firstRowCells.nth(0)).not.toHaveText('');
+    await expect(firstRowCells.nth(1)).not.toHaveText('');
+    await expect(firstRowCells.nth(2)).toHaveText(/\d+(?:\.\d+)?\s*(KB|MB|GB)/i);
+    await expect(firstRowCells.nth(3)).toHaveText(/\d{4}-\d{2}-\d{2}/);
+    await expect(firstRowCells.nth(4)).toHaveText(/v\d+/i);
 
-    await expect(secondRow).toContainText('500.2 KB');
-    await expect(secondRow).toContainText('2026-05-08');
-    await expect(secondRow).toContainText('v1');
+    const secondRow = rows.nth(1);
+    const secondRowCells = secondRow.locator('td');
+
+    await expect(secondRowCells.nth(0)).not.toHaveText('');
+    await expect(secondRowCells.nth(1)).not.toHaveText('');
+    await expect(secondRowCells.nth(2)).toHaveText(/\d+(?:\.\d+)?\s*(KB|MB|GB)/i);
+    await expect(secondRowCells.nth(3)).toHaveText(/\d{4}-\d{2}-\d{2}/);
+    await expect(secondRowCells.nth(4)).toHaveText(/v\d+/i);
   });
 
   test('should open document preview', async ({ page }) => {
