@@ -2,10 +2,15 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Partner Portal - Login page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('https://portal-auth-us-east-2.uat.fastgamernetwork.com/login?client_id=k60144cohv4qmhk4qtskm7pse&redirect_uri=https%3A%2F%2Fpartners.uat.fastgamernetwork.com%2Fcallback&response_type=code&scope=openid%20email%20profile%20aws.cognito.signin.user.admin&nonce=5e4bed19f84ea5fbfee103a33b51abf229MGlh0nD&state=d683c23ef8ec42d7238c2cdc09c660aea1wEx62df&code_challenge=R8xW0WYhxvTEtaJkiX9gvJR7mRdeJyW0QNp4pTPJx5s&code_challenge_method=S256', { waitUntil: 'networkidle' });
+    await page.goto('https://partners.uat.fastgamernetwork.com/public/documents', { waitUntil: 'networkidle' });
+    await Promise.all([
+      page.waitForNavigation({ waitUntil: 'domcontentloaded' }),
+      page.getByRole('button', { name: /log in/i }).click(),
+    ]);
   });
 
   test('should display the login form', async ({ page }) => {
+  
     await expect(page.locator('form')).toBeVisible();
     await expect(page.getByLabel('Email Address')).toBeVisible();
     await expect(page.locator('input[name="password"]')).toBeVisible();
@@ -36,7 +41,11 @@ test.describe('Partner Portal - Login page', () => {
     await expect(page.getByRole('button', { name: /yuji\.takahashi@arcadian\.la/i })).toBeVisible();
     await expect(page.getByRole('link', { name: /sign in as a different user/i })).toBeVisible();
   });
+
+  test.afterAll(async ({ browser }) => {
+    await browser.close();
+  });
 });
 
-  
+
 

@@ -7,6 +7,7 @@ test.describe('Partner Portal - Public Documents', () => {
 
     await expect(page.getByText('Partner Portal')).toBeVisible();
     await expect(page.getByText('Public Documents')).toBeVisible();
+  
 
     const table = page.locator('table');
     await expect(table).toBeVisible();
@@ -88,5 +89,9 @@ test.describe('Partner Portal - Public Documents', () => {
     ]);
 
     await expect(page).toHaveURL('https://partners.uat.fastgamernetwork.com/login');
+  });
+
+  test.afterAll(async ({ browser }) => {
+    await browser.close();
   });
 });

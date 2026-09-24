@@ -2,11 +2,12 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests',
-  globalSetup: './tests/saveAuthStates.ts',
+  globalSetup: require.resolve('./tests/saveAuthStates.ts'),
   timeout: 30_000,
+  workers: 1,
   expect: { timeout: 5000 },
   use: {
-    headless: true,
+    headless: false,
     viewport: { width: 1920, height: 1080 }
   },
   projects: [
