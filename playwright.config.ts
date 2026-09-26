@@ -30,6 +30,10 @@ export default defineConfig({
   // ZONE 2: Default `use` Block (Global Browser Defaults)
   // (Applies to ALL tests unless overridden by a project)
   // --------------------------------------------------------------------------
+  globalSetup: require.resolve('./tests/saveAuthStates.ts'),
+  timeout: 30_000,
+  workers: 1,
+  expect: { timeout: 5000 },
   use: {
     baseURL: process.env.BASE_URL || 'https://default.example.com',
     trace: 'on-first-retry',
