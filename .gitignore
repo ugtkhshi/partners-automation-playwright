@@ -1,9 +1,17 @@
-venv/
-.pytest_cache/
-__pycache__/
+# Dependencies
 node_modules/
-dist/
-package-lock.json
-repo_create.json
+
+# Environment variables & local secrets
+.env
+.env.*
+!.env.example
+
+# Folders created automatically during/after Playwright test runs
 test-results/
+playwright-report/
+blob-report/
 .playwright-artifacts/
+
+# Build outputs & temp data
+dist/
+repo_create.json
